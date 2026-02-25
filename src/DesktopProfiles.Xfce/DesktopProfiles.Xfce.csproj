@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>DesktopProfiles.Xfce</RootNamespace>
+    <AssemblyName>DesktopProfiles.Xfce</AssemblyName>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Description>Desktop Profiles — Xfce/Linux client (per-monitor per-workspace wallpapers)</Description>
+    <Company>Evrion Tech Solutions AB</Company>
+    <Copyright>© 2026 Evrion Tech Solutions AB</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\core\src\DesktopProfiles.Core\DesktopProfiles.Core.csproj" />
+  </ItemGroup>
+
+</Project>

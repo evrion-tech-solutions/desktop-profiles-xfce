@@ -1,0 +1,400 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DesktopProfiles.Xfce.Gui.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="860" d:DesignHeight="800"
+        x:Class="DesktopProfiles.Xfce.Gui.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Desktop Profiles — Xfce"
+        Icon="avares://DesktopProfiles.Xfce.Gui/Assets/app-icon.png"
+        Width="860" Height="800"
+        MinWidth="720" MinHeight="620"
+        Background="{StaticResource BgPrimary}"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel>
+
+        <!-- TOP ACCENT BAR — Indigo product color -->
+        <Border DockPanel.Dock="Top" Height="3">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+                    <GradientStop Color="#818CF8" Offset="0"/>
+                    <GradientStop Color="#4F46E5" Offset="0.5"/>
+                    <GradientStop Color="#4338CA" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <!-- STATUS BAR -->
+        <Border DockPanel.Dock="Bottom"
+                Background="#080C18"
+                Padding="24,10"
+                BorderBrush="{StaticResource BorderSubtle}"
+                BorderThickness="0,1,0,0">
+            <DockPanel>
+                <Ellipse Width="7" Height="7"
+                         Margin="0,0,10,0"
+                         VerticalAlignment="Center"
+                         Fill="{StaticResource TextMuted}"
+                         IsVisible="{Binding !IsMonitoringActive}"/>
+                <Ellipse Width="7" Height="7"
+                         Margin="0,0,10,0"
+                         VerticalAlignment="Center"
+                         Fill="{StaticResource Success}"
+                         IsVisible="{Binding IsMonitoringActive}"/>
+                <TextBlock Text="{Binding StatusMessage}"
+                           Foreground="{StaticResource TextSecondary}"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="VersionLabel"
+                           Text="v1.0.0 (Xfce)"
+                           Foreground="{StaticResource TextMuted}"
+                           FontSize="11"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right"/>
+            </DockPanel>
+        </Border>
+
+        <!-- MAIN CONTENT -->
+        <ScrollViewer>
+            <StackPanel Margin="32,28,32,32">
+
+                <!-- HEADER -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <!-- Isometric cube icon -->
+                            <Viewbox Width="36" Height="36" Margin="0,0,14,0">
+                                <Canvas Width="64" Height="56">
+                                    <Polygon Points="32,2 52,12 32,22 12,12">
+                                        <Polygon.Fill>
+                                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                                <GradientStop Color="#818CF8" Offset="0"/>
+                                                <GradientStop Color="#4F46E5" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Polygon.Fill>
+                                    </Polygon>
+                                    <Polygon Points="12,12 32,22 32,42 12,32">
+                                        <Polygon.Fill>
+                                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                                <GradientStop Color="#050814" Offset="0"/>
+                                                <GradientStop Color="#0B1020" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Polygon.Fill>
+                                    </Polygon>
+                                    <Polygon Points="52,12 32,22 32,42 52,32">
+                                        <Polygon.Fill>
+                                            <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                                                <GradientStop Color="#374151" Offset="0"/>
+                                                <GradientStop Color="#1F2937" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Polygon.Fill>
+                                    </Polygon>
+                                    <Ellipse Canvas.Left="14" Canvas.Top="40" Width="36" Height="12" Opacity="0.3">
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush>
+                                                <GradientStop Color="#000000" Offset="0"/>
+                                                <GradientStop Color="Transparent" Offset="1"/>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </Canvas>
+                            </Viewbox>
+
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Desktop"
+                                               FontSize="24"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimary}"/>
+                                    <TextBlock Text=" Profiles"
+                                               FontSize="24"
+                                               FontWeight="Normal"
+                                               Foreground="{StaticResource TextSecondary}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="50,4,0,0">
+                            <TextBlock Text="Per-monitor per-workspace wallpaper management for Xfce"
+                                       FontSize="13"
+                                       Foreground="{StaticResource TextMuted}"/>
+                            <Border CornerRadius="8"
+                                    Padding="8,2"
+                                    Margin="10,0,0,0"
+                                    Background="#2610B981">
+                                <TextBlock Text="Per-monitor native"
+                                           Foreground="{StaticResource Success}"
+                                           FontSize="10"
+                                           FontWeight="SemiBold"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Monitoring toggle -->
+                    <Button Grid.Column="1"
+                            Content="{Binding MonitoringButtonText}"
+                            Command="{Binding ToggleMonitoringCommand}"
+                            VerticalAlignment="Top"
+                            Margin="0,4,0,0"/>
+                </Grid>
+
+                <!-- MONITORS -->
+                <TextBlock Text="MONITORS"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource AccentLight}"
+                           Margin="0,0,0,10"
+                           Opacity="0.8"/>
+
+                <ItemsControl ItemsSource="{Binding Monitors}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:DetectedMonitor">
+                            <Border CornerRadius="8"
+                                    Padding="18,14"
+                                    Margin="0,0,10,10"
+                                    MinWidth="190"
+                                    BorderBrush="{StaticResource BorderSubtle}"
+                                    BorderThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                                        <GradientStop Color="#0F162C" Offset="0"/>
+                                        <GradientStop Color="#131B35" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <StackPanel>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   FontSize="14"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextPrimary}"
+                                                   DockPanel.Dock="Left"/>
+                                        <Border CornerRadius="10"
+                                                Padding="10,3"
+                                                HorizontalAlignment="Right"
+                                                Background="#264F46E5">
+                                            <TextBlock Text="{Binding AspectRatio}"
+                                                       Foreground="{StaticResource AccentLight}"
+                                                       FontSize="11"
+                                                       FontWeight="SemiBold"/>
+                                        </Border>
+                                    </DockPanel>
+                                    <TextBlock Foreground="{StaticResource TextSecondary}"
+                                               FontSize="12"
+                                               Margin="0,6,0,0">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}  •  {1}">
+                                                <Binding Path="Resolution"/>
+                                                <Binding Path="DevicePath"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="No monitors detected"
+                           Foreground="{StaticResource TextMuted}"
+                           FontSize="13"
+                           Margin="0,0,0,8"
+                           IsVisible="{Binding !Monitors.Count}"/>
+
+                <!-- WORKSPACES — main section -->
+                <TextBlock Text="WORKSPACES"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource AccentLight}"
+                           Margin="0,14,0,10"
+                           Opacity="0.8"/>
+
+                <Border CornerRadius="8"
+                        Padding="20,18"
+                        BorderBrush="{StaticResource BorderSubtle}"
+                        BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                            <GradientStop Color="#0F162C" Offset="0"/>
+                            <GradientStop Color="#0D1326" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel>
+                        <TextBlock Text="Assign a wallpaper theme to each Xfce workspace. Xfce applies wallpapers per-monitor per-workspace — each screen gets its own matched image when you switch workspaces."
+                                   Foreground="{StaticResource TextMuted}"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,14"/>
+
+                        <ItemsControl ItemsSource="{Binding DesktopAssignments}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DesktopAssignmentVM">
+                                    <Border CornerRadius="6"
+                                            Padding="16,12"
+                                            Margin="0,0,0,8"
+                                            BorderBrush="{StaticResource BorderSubtle}"
+                                            BorderThickness="1"
+                                            Background="{StaticResource BgInput}">
+                                        <Grid ColumnDefinitions="110,*,Auto,Auto">
+
+                                            <StackPanel Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Border Width="4" Height="24" CornerRadius="2" Margin="0,0,12,0"
+                                                        Background="{StaticResource Accent}"/>
+                                                <TextBlock Text="{Binding DisplayLabel}"
+                                                           FontSize="14"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{StaticResource TextPrimary}"/>
+                                            </StackPanel>
+
+                                            <ComboBox Grid.Column="1"
+                                                      ItemsSource="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ThemeNames}"
+                                                      SelectedItem="{Binding SelectedThemeName, Mode=TwoWay}"
+                                                      Margin="12,0"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Stretch"/>
+
+                                            <Border Grid.Column="2"
+                                                    CornerRadius="4"
+                                                    ClipToBounds="True"
+                                                    Width="100" Height="56"
+                                                    Margin="4,0"
+                                                    BorderBrush="{StaticResource BorderSubtle}"
+                                                    BorderThickness="1"
+                                                    Background="#0B1020">
+                                                <Image Source="{Binding PreviewImage}"
+                                                       Stretch="UniformToFill"/>
+                                            </Border>
+
+                                            <Button Grid.Column="3"
+                                                    Content="✕"
+                                                    Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveDesktopCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    VerticalAlignment="Center"
+                                                    Margin="10,0,0,0"
+                                                    Foreground="{StaticResource TextMuted}"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Padding="8,4"
+                                                    ToolTip.Tip="Remove workspace assignment"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Button Content="+ Add Workspace"
+                                Command="{Binding AddDesktopCommand}"
+                                HorizontalAlignment="Left"
+                                Margin="0,6,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- SETTINGS -->
+                <TextBlock Text="SETTINGS"
+                           FontSize="10"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource AccentLight}"
+                           Margin="0,24,0,10"
+                           Opacity="0.8"/>
+
+                <Border CornerRadius="8"
+                        Padding="22,18"
+                        BorderBrush="{StaticResource BorderSubtle}"
+                        BorderThickness="1">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="50%,0%" EndPoint="50%,100%">
+                            <GradientStop Color="#0F162C" Offset="0"/>
+                            <GradientStop Color="#0D1326" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,16,Auto">
+
+                        <CheckBox Grid.Row="0" Grid.Column="0"
+                                  Content="Apply on workspace change"
+                                  IsChecked="{Binding ApplyOnContextChange}"
+                                  Margin="0,0,0,16"/>
+                        <CheckBox Grid.Row="0" Grid.Column="1"
+                                  Content="Apply on monitor change"
+                                  IsChecked="{Binding ApplyOnMonitorChange}"
+                                  Margin="0,0,0,16"/>
+
+                        <CheckBox Grid.Row="1" Grid.Column="0"
+                                  Content="Minimize to tray"
+                                  IsChecked="{Binding MinimizeToTray}"
+                                  Margin="0,0,0,16"/>
+                        <CheckBox Grid.Row="1" Grid.Column="1"
+                                  Content="Start automatically on login"
+                                  IsChecked="{Binding AutoStart}"
+                                  Margin="0,0,0,16"/>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,16">
+                            <TextBlock Text="Debounce:"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,8,0"
+                                       FontSize="13"/>
+                            <TextBox Text="{Binding DebounceMs}"
+                                     Width="60"
+                                     VerticalAlignment="Center"/>
+                            <TextBlock Text="ms"
+                                       Foreground="{StaticResource TextMuted}"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"
+                                       FontSize="12"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Orientation="Horizontal">
+                            <TextBlock Text="Themes path:"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0"
+                                       FontSize="13"/>
+                            <TextBox Text="{Binding WallpapersBasePath}"
+                                     Width="480"
+                                     VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ACTION BAR -->
+                <Grid Margin="0,28,0,0" ColumnDefinitions="Auto,*,Auto">
+
+                    <Button Grid.Column="0"
+                            Content="Save &amp; Apply"
+                            Command="{Binding SaveAndApplyCommand}"
+                            Background="{StaticResource Accent}"
+                            Foreground="White"
+                            FontWeight="SemiBold"
+                            Padding="24,10"/>
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal">
+                        <Button Content="Apply Now"
+                                Command="{Binding ApplyNowCommand}"
+                                Margin="0,0,8,0"/>
+                        <Button Content="Refresh Monitors"
+                                Command="{Binding RefreshMonitorsCommand}"/>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!--  EVRION BRAND SYSTEM — Desktop Branding        -->
+    <!--  Product color: Indigo #4F46E5                 -->
+    <!--  Xfce GUI port                                 -->
+    <!-- ═══════════════════════════════════════════════ -->
+
+    <!-- Backgrounds -->
+    <SolidColorBrush x:Key="BgPrimary"       Color="#0B1020"/>
+    <SolidColorBrush x:Key="BgSurface"       Color="#0F162C"/>
+    <SolidColorBrush x:Key="BgSurfaceHover"  Color="#16244D"/>
+    <SolidColorBrush x:Key="BgInput"         Color="#131B35"/>
+    <SolidColorBrush x:Key="BgInputHover"    Color="#1A2545"/>
+    <SolidColorBrush x:Key="BgElevated"      Color="#16244D"/>
+
+    <!-- Borders -->
+    <SolidColorBrush x:Key="BorderDefault"   Color="#27304A"/>
+    <SolidColorBrush x:Key="BorderFocus"     Color="#818CF8"/>
+    <SolidColorBrush x:Key="BorderSubtle"    Color="#1E2940"/>
+
+    <!-- Product accent: Indigo -->
+    <SolidColorBrush x:Key="Accent"          Color="#4F46E5"/>
+    <SolidColorBrush x:Key="AccentHover"     Color="#6366F1"/>
+    <SolidColorBrush x:Key="AccentPressed"   Color="#4338CA"/>
+    <SolidColorBrush x:Key="AccentLight"     Color="#818CF8"/>
+    <SolidColorBrush x:Key="AccentSubtle"    Color="#2E2A6E"/>
+
+    <!-- Company brand colors -->
+    <SolidColorBrush x:Key="BrandHoldings"   Color="#1E3A8A"/>
+    <SolidColorBrush x:Key="BrandTech"       Color="#059669"/>
+    <SolidColorBrush x:Key="BrandSecurity"   Color="#F59E0B"/>
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="TextPrimary"     Color="#E5E7EB"/>
+    <SolidColorBrush x:Key="TextSecondary"   Color="#9CA3AF"/>
+    <SolidColorBrush x:Key="TextMuted"       Color="#4B5563"/>
+
+    <!-- Semantic -->
+    <SolidColorBrush x:Key="Success"         Color="#10B981"/>
+    <SolidColorBrush x:Key="Warning"         Color="#F59E0B"/>
+    <SolidColorBrush x:Key="Error"           Color="#EF4444"/>
+
+</ResourceDictionary>
