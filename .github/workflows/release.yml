@@ -1,0 +1,47 @@
+name: Release Build
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build & Publish (Self-Contained)
+      run: |
+        dotnet publish src/DesktopProfiles.Xfce.Gui/DesktopProfiles.Xfce.Gui.csproj \
+        -c Release -r linux-x64 \
+        --self-contained true \
+        -p:PublishSingleFile=true \
+        -p:IncludeNativeLibrariesForSelfExtract=true \
+        -o ./publish/
+      
+    - name: Package Release
+      run: |
+        cp README.md LICENSE install.sh ./publish/
+        cd ./publish/
+        zip -r "desktop-profiles-xfce-linux-x64.zip" ./*
+
+    - name: Upload Release Asset
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: ./publish/desktop-profiles-xfce-linux-x64.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
